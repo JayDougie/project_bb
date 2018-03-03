@@ -27,8 +27,6 @@ class App extends Component {
 					<MenuItem onClick={this.handleClose}>Businesses</MenuItem>
 					<MenuItem onClick={this.handleClose}>My Account</MenuItem>
 			</Drawer>
-          
-			<CircularProgress />
         </div>
       </MuiThemeProvider>
 

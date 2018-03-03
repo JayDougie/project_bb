@@ -577,7 +577,7 @@ class BusinessDirectory extends Component {
 const MyMapComponent = withScriptjs(withGoogleMap((props) =>
   <GoogleMap
     defaultZoom={8}
-    defaultCenter={{ lat: 28.5383355, lng: -81.3792365 }}
+    defaultCenter={{ lat: 38.9071923, lng: -77.03687070000001 }}
   >
 	{	props.isMarkerShown &&
 		props.businesses.map(business => (

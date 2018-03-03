@@ -5,13 +5,33 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from'material-ui/MenuItem';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import { FlatButton } from 'material-ui';
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
+import {Grid, Row, Col} from 'react-bootstrap';
 
 class BusinessDirectory extends Component {
   	constructor(props) {
 		super(props);
 		this.state = {
 			open: false,
-			showList: true
+			showList: true,
+			businesses: [
+				{
+					business_name: "Business 1",
+					location: {lat: 28.538335, lng: -81.379236},
+					category: "Entertainment",
+					phone: "999-999-9999",
+					hours: "Open 24/7",
+					rating: "5/5"
+				},
+				{
+					business_name: "Business 2",
+					location: {lat: 28.802861, lng: -81.269453},
+					category: "Retail",
+					phone: "111-111-1111",
+					hours: "Open 24/5",
+					rating: "3/5"
+				}
+			]
 		};
 	}
 	
@@ -23,7 +43,7 @@ class BusinessDirectory extends Component {
 
 	render() {
 		const contentStyle = { transition: 'margin-right 450ms cubic-bezier(0.23, 1, 0.32, 1)' };
-
+		
 		if (this.state.showList) {
 			contentStyle.marginRight = 256;
 		}
@@ -39,35 +59,41 @@ class BusinessDirectory extends Component {
 						<MenuItem onClick={this.handleClose}>Businesses</MenuItem>
 						<MenuItem onClick={this.handleClose}>My Account</MenuItem>
 				</Drawer>
-				<BusinessSection show={this.state.showList} />
+				<br />
+				<div>
+					<MyMapComponent
+						isMarkerShown
+						googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+						loadingElement={<div style={{ height: `100%` }} />}
+						containerElement={<div style={{ height: `400px` }} />}
+						mapElement={<div style={{ height: `100%` }} />}
+						businesses={this.state.businesses}
+					/>
+					<BusinessSection show={this.state.showList} businesses={this.state.businesses} />
+				</div>
 			</div>
 		);
 	}
 }
 
+const MyMapComponent = withScriptjs(withGoogleMap((props) =>
+  <GoogleMap
+    defaultZoom={8}
+    defaultCenter={{ lat: 28.5383355, lng: -81.3792365 }}
+  >
+	{	props.isMarkerShown &&
+		props.businesses.map(business => (
+			<Marker position={business.location} />
+		))
+	} 
+  </GoogleMap>
+))
+
 class BusinessSection extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			show: this.props.show,
-			businesses: [
-				{
-					business_name: "Business 1",
-					address: 'Lynn, MA',
-					category: "Entertainment",
-					phone: "999-999-9999",
-					hours: "Open 24/7",
-					rating: "5/5"
-				},
-				{
-					business_name: "Business 2",
-					address: 'Boston, MA',
-					category: "Retail",
-					phone: "111-111-1111",
-					hours: "Open 24/5",
-					rating: "3/5"
-				}
-			]
+			show: this.props.show
 		};
 	}
 
@@ -77,9 +103,10 @@ class BusinessSection extends Component {
 	// }
 
 	render() {
+		const style = { width: 400 };
 		return (
-			<Drawer id="listDrawer" docked={true} open={this.props.show} openSecondary={true}>
-				{this.state.businesses.map(business => (
+			<Drawer docked={true} open={this.props.show} openSecondary={true} style={style}>
+				{this.props.businesses.map(business => (
 					<BusinessListing data={business} />
 			))}
 			</Drawer>
@@ -88,7 +115,6 @@ class BusinessSection extends Component {
 }
 
 class BusinessListing extends Component {
-
 	render() {
 		return (
 			<Card>
@@ -96,10 +122,10 @@ class BusinessListing extends Component {
 					title={this.props.data.business_name}
 				/>
 				<CardText>
-					Category: {this.props.data.category} <br />
-					Phone: {this.props.data.phone} <br />
-					Hours: {this.props.data.hours} <br />
-					Rating: {this.props.data.rating} <br />
+					<b>Category:</b> {this.props.data.category} <br />
+					<b>Phone:</b> {this.props.data.phone} <br />
+					<b>Hours:</b> {this.props.data.hours} <br />
+					<b>Rating:</b> {this.props.data.rating} <br />
 				</CardText>
 				<CardActions>
 					<FlatButton label="View Info" primary={true} />
@@ -108,15 +134,6 @@ class BusinessListing extends Component {
 		);
 	}
 }
-
-// class Map extends Component {
-	
-// 	render() {
-// 		return (
-
-// 		);
-// 	}
-// }
 
 // class BusinessInfo extends Component {
 

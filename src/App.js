@@ -45,8 +45,8 @@ class App extends Component {
 			<div>
 				<AppBar title="Belp" onClick={()=>this.setState({value: 1})} titleStyle={{textAlign: 'center'}} onLeftIconButtonClick={this.handleToggle} iconElementRight={<FlatButton label="Get Started"/>} />
 				<Drawer docked={false} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
-						<MenuItem onClick={()=>this.setState({value: 1}) (this.handleClose)}>Home</MenuItem>
-						<MenuItem onClick={()=>this.setState({value: 2}) (this.handleClose)}>Businesses</MenuItem>
+						<MenuItem onClick={()=>this.setState({value: 1})}>Home</MenuItem>
+						<MenuItem onClick={()=>this.setState({value: 2})}>Businesses</MenuItem>
 						<MenuItem onClick={this.handleClose}>My Account</MenuItem>
 						<MenuItem onClick={this.handleClose}>Support</MenuItem>
 						<MenuItem onClick={this.handleClose}>Sign out</MenuItem>

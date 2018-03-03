@@ -3,12 +3,11 @@ import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from'material-ui/MenuItem';
 import {Tabs, Tab} from 'material-ui/Tabs';
-
 // Jeff's home page file imported here
-//import ...
+import Home from './Home.js';
 
 // Josh's 2nd page file imported here
-//import ...
+import Activities from'./Activities.js';
 
 // Derek's Page 3 external components
 import BusinessDirectory from './BusinessDirectory.js';
@@ -17,7 +16,8 @@ class App extends Component {
   	constructor(props) {
 		super(props);
 		this.state = {
-			tabValue: 1
+			tabValue: 1,
+			open: false
 		};
 	}
 	
@@ -47,12 +47,12 @@ class App extends Component {
 				<Tabs value={this.state.value}>
 					<Tab label="Enter Location">
 						<div>
-							{/* Jeff's Home Component */}
+							<Home onClick={this.handleTabChange}/>
 						</div>
 					</Tab>
 					<Tab label="Select Categories">
 						<div>
-							{/* Josh's Category Component */}
+							<Activities onClick={this.handleTabChange}/>
 						</div>
 					</Tab>
 					<Tab label="View Businesses">

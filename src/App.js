@@ -4,6 +4,8 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from'material-ui/MenuItem';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import FlatButton from 'material-ui/FlatButton';
+import SwipeableViews from 'react-swipeable-views';
+
 // Jeff's home page file imported here
 import Home from './Home.js';
 
@@ -17,7 +19,7 @@ class App extends Component {
   	constructor(props) {
 		super(props);
 		this.state = {
-			value: 1,
+			value: 0,
 			open: false
 		};
 	}
@@ -43,9 +45,9 @@ class App extends Component {
 	render() {
 		return (
 			<div>
-				<AppBar title="Belp" onClick={()=>this.setState({value: 1})} titleStyle={{textAlign: 'center'}} onLeftIconButtonClick={this.handleToggle} iconElementRight={<FlatButton label="Get Started"/>} />
+				<AppBar title="Belp" onClick={()=>this.setState({value: 0})} titleStyle={{textAlign: 'center'}} onLeftIconButtonClick={this.handleToggle} iconElementRight={<FlatButton label="Get Started"/>} />
 				<Drawer docked={false} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
-						<MenuItem onClick={()=>this.setState({value: 1}) (this.handleClose)}>Home</MenuItem>
+						<MenuItem onClick={()=>this.setState({value: 0}) (this.handleClose)}>Home</MenuItem>
 						<MenuItem onClick={()=>this.setState({value: 2}) (this.handleClose)}>Businesses</MenuItem>
 						<MenuItem onClick={this.handleClose}>My Account</MenuItem>
 						<MenuItem onClick={this.handleClose}>Support</MenuItem>
@@ -56,22 +58,25 @@ class App extends Component {
 						/>
 				</Drawer>
 				<Tabs value={this.state.value} >
-					<Tab label="Enter Location" value = {1} >
+					<Tab label="Enter Location" value = {0} />
+					<Tab label="Select Categories" value = {1}  />
+					<Tab label="View Businesses" value = {2} />
+				</Tabs>
+				<SwipeableViews
+					index={this.state.value}>
 						<div>
 							<Home onClick={this.handleTabChange}/>
 						</div>
-					</Tab>
-					<Tab label="Select Categories" value = {2}  >
+
 						<div>
 							<Activities onClick={this.handleTabChange}/>
 						</div>
-					</Tab>
-					<Tab label="View Businesses" value = {3} >
+					
 						<div>
 							<BusinessDirectory />
 						</div>
-					</Tab>
-				</Tabs>
+				</SwipeableViews>
+
 			</div>
 		);
 	}

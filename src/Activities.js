@@ -145,14 +145,14 @@ class Activities extends Component {
 
     render() {
         return (
-                <div>
+                <div >
                     <div style={styles.outer}>
                         <GridListExampleComplex1 />
                         <GridListExampleComplex2 />
                     </div>
-
-                    <div className="shrink">
-                        <RaisedButton onClick={sendData} label="Find Businesses!" fullWidth={true} />
+                    <br/>
+                    <div className="shrink" style={{width: "20%", margin: '0 auto'}}>
+                        <RaisedButton onClick={this.props.onClick} label="Find Businesses!"  style={{width: 300}} primary={true} />
                     </div>
                 </div>
         );

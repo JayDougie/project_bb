@@ -12,9 +12,9 @@ class Home extends Component {
         this.state = { };
     }
 	render(){
-		var states = ["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD",
-	"MA","MI","MN","MS","MO","MT","NE","NV","NH","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","TN","TX","UT","VT",
-	"VA","WA","WV","WI","WY"]
+		var states = [ "AL", "AK", "AS", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FM", "FL", "GA", "GU", "HI", "ID", "IL", "IN", "IA", "KS", 
+		"KY", "LA", "ME", "MH", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "MP", "OH", "OK", 
+		"OR", "PW", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VI", "VA", "WA", "WV", "WI", "WY" ]
 		return (
 			<div>
 				<div className="row">
@@ -31,20 +31,22 @@ class Home extends Component {
 				<Paper zDepth={5} style={{width:400, margin: '0 auto'}}>
 					<TextField hintText="City"  underlineShow={false} />
 					<Divider />
-					<TextField hintText="State"  underlineShow={false} />
-					<Divider />
-				</Paper>
-				
-				<SelectField
-					floatingLabelText="Frequency"
+					{/* <SelectField
+					floatingLabelText="Select a State"
 					value={this.state.value}
 					onChange={this.handleChange}
-					autoWidth={true}
+					style ={{width: 200}}
 					>
 					{states.map(state => (
 						<MenuItem value={state} primaryText={state} />
 					) )}
-        		</SelectField>
+        			</SelectField>
+					<Divider/> */}
+					<TextField hintText="State"  underlineShow={false} />
+					<Divider />
+				</Paper>
+				
+				
 				<br/><br/>
 				<FlatButton label="Find Activities" primary={true} onClick={this.props.onClick} />
 				{/* Implement button event handler to change tab */}

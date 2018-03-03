@@ -3,6 +3,7 @@ import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from'material-ui/MenuItem';
 import {Tabs, Tab} from 'material-ui/Tabs';
+import FlatButton from 'material-ui/FlatButton';
 // Jeff's home page file imported here
 import Home from './Home.js';
 
@@ -16,7 +17,7 @@ class App extends Component {
   	constructor(props) {
 		super(props);
 		this.state = {
-			tabValue: 1,
+			value: 1,
 			open: false
 		};
 	}
@@ -24,11 +25,15 @@ class App extends Component {
 	handleToggle = () => this.setState({ open: !this.state.open, showList: this.state.showList });
 	handleClose = () => this.setState({ open: false, showList: this.state.showList });
 
-	handleTabChange = (value) => {
-		this.setState({
-		  value: this.state.value + 1,
-		});
-	};
+	handleTabChange = () => this.setState({value: this.state.value+1});
+	handleTabChangeClick = () => this.setState({value: this.state.value});
+
+
+	// handleTabChange  () {
+	// 	this.setState({
+	// 	  value: this.state.value + 1,
+	// 	});
+	// };
 	resetTabs = (value) => {
 		this.setState({
 		  value: 1,
@@ -38,24 +43,30 @@ class App extends Component {
 	render() {
 		return (
 			<div>
-				<AppBar title="Project Black Businesses" titleStyle={{textAlign: 'center'}} onLeftIconButtonClick={this.handleToggle} />
+				<AppBar title="Belp" onClick={()=>this.setState({value: 1})} titleStyle={{textAlign: 'center'}} onLeftIconButtonClick={this.handleToggle} iconElementRight={<FlatButton label="Get Started"/>} />
 				<Drawer docked={false} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
-						<MenuItem onClick={this.handleClose}>Home</MenuItem>
-						<MenuItem onClick={this.handleClose}>Businesses</MenuItem>
+						<MenuItem onClick={()=>this.setState({value: 1}) (this.handleClose)}>Home</MenuItem>
+						<MenuItem onClick={()=>this.setState({value: 2}) (this.handleClose)}>Businesses</MenuItem>
 						<MenuItem onClick={this.handleClose}>My Account</MenuItem>
+						<MenuItem onClick={this.handleClose}>Support</MenuItem>
+						<MenuItem onClick={this.handleClose}>Sign out</MenuItem>
+						<br/><br/><br/>
+						<img
+						src={require('../src/img/logo.png')} height="210" width="240"
+						/>
 				</Drawer>
-				<Tabs value={this.state.value}>
-					<Tab label="Enter Location">
+				<Tabs value={this.state.value} >
+					<Tab label="Enter Location" value = {1} >
 						<div>
 							<Home onClick={this.handleTabChange}/>
 						</div>
 					</Tab>
-					<Tab label="Select Categories">
+					<Tab label="Select Categories" value = {2}  >
 						<div>
 							<Activities onClick={this.handleTabChange}/>
 						</div>
 					</Tab>
-					<Tab label="View Businesses">
+					<Tab label="View Businesses" value = {3} >
 						<div>
 							<BusinessDirectory />
 						</div>

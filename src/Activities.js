@@ -127,6 +127,7 @@ const GridListExampleComplex2 = () => (
 
 function addData(category) {
     arr.push(category);
+    console.log(arr);
 }
 
 function sendData() {

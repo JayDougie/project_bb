@@ -13,7 +13,7 @@ class BusinessDirectory extends Component {
 		super(props);
 		this.state = {
             showList: true,
-            businesses: json.data,
+            businesses: [],
 			viewingBusiness: false,
 			businessToView: {}
 		};

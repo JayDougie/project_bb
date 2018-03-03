@@ -13,41 +13,67 @@ class BusinessDirectory extends Component {
 		super(props);
 		this.state = {
             showList: true,
-            businesses: []
+            businesses: [
+				{
+					business_name: 'Business Name',
+					location: {},
+					phone: '123-456-7890',
+					category: 'Food & Dining',
+					rating: '3/5'
+				}
+			]
 		};
+
+		// Get businesses API call
+		var parameters = { // parameters to send
+			"search": "",
+			"city": "Orlando", // optional
+			"state": "FL", // optional
+			"categories": []  // optional
+		};
+		
+		var oReq = new XMLHttpRequest();
+		oReq.addEventListener("load", reqListener);
+		oReq.open("POST", "/api/businesses");
+		oReq.setRequestHeader("Content-Type", "application/json");
+		oReq.send(JSON.stringify(parameters));
+		function reqListener () { // Callback function for what to do with response
+			console.log(this.responseText);
+		}
 	}
     
-	toggleList =() => this.setState({ open: this.state.open, showList: !this.state.showList });
+	toggleList = () => this.setState({ businesses: this.state.businesses, showList: !this.state.showList });
 
 	render() {
-		const contentStyle = { transition: 'margin-right 450ms cubic-bezier(0.23, 1, 0.32, 1)' };
-		
-		if (this.state.showList) {
-			contentStyle.marginRight = 256;
-		}
-
 		return (
-			<div style={contentStyle}>
-				<Drawer docked={false}
-					open={this.state.open}
-					onRequestChange={(open) => this.setState({open})}>
-						<MenuItem onClick={this.handleClose}>Home</MenuItem>
-						<MenuItem onClick={this.handleClose}>Businesses</MenuItem>
-						<MenuItem onClick={this.handleClose}>My Account</MenuItem>
-				</Drawer>
+			<Grid>
 				<br />
-				<div>
-					<MyMapComponent
-						isMarkerShown
-						googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
-						loadingElement={<div style={{ height: `100%` }} />}
-						containerElement={<div style={{ height: `400px` }} />}
-						mapElement={<div style={{ height: `100%` }} />}
-						businesses={this.state.businesses}
-					/>
-					<BusinessSection show={this.state.showList} businesses={this.state.businesses} />
-				</div>
-			</div>
+				<Row>
+					<Col xsOffset={this.state.showList ? 8 : 12}>
+						<FlatButton label={this.state.showList ? "Hide List" : "Show List"} onClick={this.toggleList} />
+					</Col>
+				</Row>
+				<br />
+				<Row>
+					<Col md={this.state.showList ? 8 : 12}>
+						<MyMapComponent
+							isMarkerShown
+							googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+							loadingElement={<div style={{ height: `100%` }} />}
+							containerElement={<div style={{ height: `300px` }} />}
+							mapElement={<div style={{ height: `100%` }} />}
+							businesses={this.state.businesses}
+						/>
+					</Col>
+					{(this.state.showList) ? 
+						<Col md={4}>
+							<BusinessSection show={this.state.showList} businesses={this.state.businesses} />
+						</Col>
+						:
+						<Col mdHidden></Col>
+					}
+				</Row>
+			</Grid>
 		);
 	}
 }
@@ -73,19 +99,13 @@ class BusinessSection extends Component {
 		};
 	}
 
-	componentWillMount() {
-        // Get businesses API call
-        
-	}
-
 	render() {
-		const style = { width: 400 };
 		return (
-			<Drawer docked={true} open={this.props.show} openSecondary={true} style={style}>
+			<div>
 				{this.props.businesses.map(business => (
 					<BusinessListing data={business} />
-			))}
-			</Drawer>
+				))}
+			</div>
 		);
 	}
 }
@@ -94,9 +114,7 @@ class BusinessListing extends Component {
 	render() {
 		return (
 			<Card>
-				<CardHeader 
-					title={this.props.data.business_name}
-				/>
+				<CardHeader title={this.props.data.business_name} />
 				<CardText>
 					<b>Category:</b> {this.props.data.category} <br />
 					<b>Phone:</b> {this.props.data.phone} <br />
@@ -111,13 +129,25 @@ class BusinessListing extends Component {
 	}
 }
 
-// class BusinessInfo extends Component {
+class BusinessInfo extends Component {
 
-// 	render() {
-// 		return (
-
-// 		);
-// 	}
-// }
+	render() {
+		return (
+			<div>
+				<Card>
+					<CardText>
+						<b>Category:</b> {this.props.data.category} <br />
+						<b>Phone:</b> {this.props.data.phone} <br />
+						<b>Hours:</b> {this.props.data.hours} <br />
+						<b>Rating:</b> {this.props.data.rating} <br />
+					</CardText>
+					<CardActions>
+						<FlatButton label="View Info" primary={true} />
+					</CardActions>
+				</Card>
+			</div>
+		);
+	}
+}
 
 export default BusinessDirectory;

@@ -47,7 +47,7 @@ const tilesData1 = [
     },
     {
         img: 'images/image5.jpeg',
-        category: 'Grocery Stores',
+        category: 'Beauty',
     },
 ];
 
@@ -58,19 +58,19 @@ const tilesData2 = [
     },
     {
         img: 'images/image7.jpeg',
-        category: 'Photography',
+        category: 'Publishing',
     },
     {
         img: 'images/image8.jpeg',
-        category: 'Babysitting',
+        category: 'Insurance',
     },
     {
         img: 'images/image9.jpeg',
-        category: 'Skilled Labor',
+        category: 'Business',
     },
     {
         img: 'images/image10.jpeg',
-        category: 'Museum',
+        category: 'Entertainment',
         featured: true,
     }
 ];
@@ -92,6 +92,7 @@ const GridListExampleComplex1 = () => (
                     cols={tile.featured ? 2 : 1}
                     rows={tile.featured ? 2 : 1}
                     onClick={addData(tile.category)}
+                    selected={false}
                 >
                     <img src={tile.img} />
                 </GridTile>
@@ -117,6 +118,7 @@ const GridListExampleComplex2 = () => (
                     cols={tile.featured ? 2 : 1}
                     rows={tile.featured ? 2 : 1}
                     onClick={addData(tile.category)}
+                    selected={false}
                 >
                     <img src={tile.img} />
                 </GridTile>

@@ -20,12 +20,85 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+
+    <style>
+      #map {
+        height: 400px;
+        width: 100%;
+      }
+    </style>
+
   </head>
   <body>
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="root"></div>
+
+    <h1>My Google Map</h1>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+
+        // Map creation
+        // var options = {
+        //   zoom: 8,
+        //   center: {lat:42.3601, lng:-71.0589}
+        // }
+        // var map = new google.maps.Map(document.getElementById('map'), options);
+      
+        // Markers array
+        var markers = [];
+        
+        function addMarkers() {
+          for (var i=0; i<markers.length; i++) {
+            addMarker(markers[i].coords, marker[i].title);
+          }
+        }
+        
+        
+        // Add marker function
+        function addMarker(coords, title) {
+          var marker = new google.maps.Marker({
+            position: coords,
+            map: map
+          });
+          
+          if (title) {
+            var infoWindow = new google.maps.InfoWindow({
+              content: '<a href="#"><h1>' + title + '</h1></a>'
+            });
+            marker.addListener('click', function() {
+              infoWindow.open(map, marker);
+            });
+          }
+        }
+        
+        var geocoder, map;
+        var address = 'Lynn, MA';
+        geocoder = new google.maps.Geocoder();
+          geocoder.geocode({
+              'address': address
+          }, function(results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+                  var myOptions = {
+                      zoom: 8,
+                      center: results[0].geometry.location
+                  }
+                  map = new google.maps.Map(document.getElementById("map"), myOptions);
+                  
+                  markers.push({coords: results[0].geometry.location, title: address});
+                  //addMarker(results[0].geometry.location, address);
+              }
+          });
+          console.log(markers);
+          
+          addMarkers();
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9vstyymV8-xqiTirktAW967Hu89BQ2sw&callback=initMap">
+    </script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

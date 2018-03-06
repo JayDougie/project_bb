@@ -7,6 +7,7 @@ import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import { FlatButton } from 'material-ui';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 import {Grid, Row, Col} from 'react-bootstrap';
+import ScrollArea from 'react-scrollbar';
 
 class BusinessDirectory extends Component {
   	constructor(props) {
@@ -552,8 +553,10 @@ class BusinessDirectory extends Component {
 					</Col>
 					{(this.state.showList) ? 
 						<Col md={4}>
+							<ScrollArea style={{height: 500}} horizontal={false}>
 							<BusinessSection show={this.state.showList} businesses={this.state.businesses}
 								viewBusiness={this.viewBusiness} />
+							</ScrollArea>
 						</Col>
 						:
 						<Col mdHidden></Col>

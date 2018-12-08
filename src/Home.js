@@ -19,7 +19,7 @@ class Home extends Component {
 			<div>
 				<div className="row">
 				<img
-			 	src={require('../src/img/home-strip2.jpg')} height="904" width="1350"
+			 	src={require('../src/img/home-strip2.jpg')} height="904" width="100%"
 				 />
 			</div>
 			

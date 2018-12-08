@@ -28,7 +28,7 @@ class App extends Component {
 	handleClose = () => this.setState({ open: false, showList: this.state.showList });
 
 	handleTabChange = () => this.setState({value: this.state.value+1});
-	handleTabChangeClick = () => this.setState({value: this.state.value});
+	handleTabChangeClick = (tabValue) => this.setState({value: tabValue});
 
 
 	// handleTabChange  () {
@@ -45,23 +45,21 @@ class App extends Component {
 	render() {
 		return (
 			<div>
-				<AppBar title="Belp" onClick={()=>this.setState({value: 0})} titleStyle={{textAlign: 'center'}} onLeftIconButtonClick={this.handleToggle} iconElementRight={<FlatButton label="Get Started"/>} />
+				<AppBar title="Belp"  titleStyle={{textAlign: 'center'}} onLeftIconButtonClick={this.handleToggle} iconElementRight={<FlatButton label="Get Started"/>} />
 				<Drawer docked={false} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
 
-						<MenuItem onClick={()=>this.setState({value: 1})}>Home</MenuItem>
+						<MenuItem onClick={()=>this.setState({value: 0})}>Home</MenuItem>
 						<MenuItem onClick={()=>this.setState({value: 2})}>Businesses</MenuItem>
 						<MenuItem onClick={this.handleClose}>My Account</MenuItem>
 						<MenuItem onClick={this.handleClose}>Support</MenuItem>
 						<MenuItem onClick={this.handleClose}>Sign out</MenuItem>
 						<br/><br/><br/>
-						<img
-						src={require('../src/img/logo.png')} height="210" width="240"
-						/>
+						<img src={require('../src/img/logo.png')} height="210" width="240"/>
 				</Drawer>
-				<Tabs value={this.state.value} >
-					<Tab label="Enter Location" value = {0} />
-					<Tab label="Select Categories" value = {1}  />
-					<Tab label="View Businesses" value = {2} />
+				<Tabs value={this.state.value} onChange={(value) => this.handleTabChangeClick(value)}>
+					<Tab label="Enter Location" value={0}/>
+					<Tab label="Select Categories" value={1} />
+					<Tab label="View Businesses" value={2} />
 				</Tabs>
 				<SwipeableViews
 					index={this.state.value}>
